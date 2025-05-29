@@ -8,9 +8,9 @@ spring:
     enabled: true
     locations: classpath:db/migration
   datasource:
-    url: jdbc:postgresql://localhost:32801/weatherdb
-    username: weatheruser
-    password: weathertpass
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:32801}/weatherdb
+    username: ${DB_USERNAME:weatheruser}
+    password: ${DB_PASSWORD:weathertpass}
     driver-class-name: org.postgresql.Driver
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
@@ -26,8 +26,10 @@ spring:
     hibernate:
       ddl-auto: validate
 weather-api:
-  user-agent: "https://www.linkedin.com/in/csabacsak/ csabacsakcareer@gmail.com"
+  user-agent: ${WEATHER_API_USER_AGENT:"https://www.linkedin.com/in/csabacsak/ csabacsakcareer@gmail.com"}
   url: "https://api.met.no"
 
 event-api:
   url: "http://localhost:8080"
+
+event-topic: "weather-topic"

@@ -17,7 +17,7 @@ public class WeatherEventConsumer {
     private final ObjectMapper objectMapper;
     private final EventRepository eventRepository;
 
-    @KafkaListener(topics = "test-topic")
+    @KafkaListener(topics = "${event-topic}")
     @Transactional(transactionManager = "transactionManager")
     public void consume(final ConsumerRecord<String, String> record) {
         final WeatherEvent weatherEvent = this.mapEvent(record.value());
