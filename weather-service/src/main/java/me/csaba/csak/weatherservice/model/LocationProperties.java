@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -33,5 +33,5 @@ public class LocationProperties {
     Double windSpeed;
 
     @Column(name = "timestamp", nullable = false)
-    LocalDateTime timestamp;
+    Instant timestamp;
 }

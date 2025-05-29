@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -86,7 +87,7 @@ public class WeatherService {
                             .location(locationEntity)
                             .temperature(ts.data().instant().details().airTemperature())
                             .windSpeed(ts.data().instant().details().windSpeed())
-                            .timestamp(ts.time())
+                            .timestamp(ZonedDateTime.of(ts.time(), ZoneId.of("UTC")).toInstant())
                             .build())
                     .toList();
             locationEntity.setProperties(propertiesList);

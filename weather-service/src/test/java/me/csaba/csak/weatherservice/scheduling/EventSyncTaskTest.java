@@ -1,10 +1,9 @@
-package me.csaba.csak.weatherservice.service;
+package me.csaba.csak.weatherservice.scheduling;
 
 import me.csaba.csak.EventDTO;
 import me.csaba.csak.weatherservice.client.EventClient;
 import me.csaba.csak.weatherservice.model.EventEntity;
 import me.csaba.csak.weatherservice.repository.EventRepository;
-import me.csaba.csak.weatherservice.scheduling.EventSyncTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -63,12 +62,10 @@ class EventSyncTaskTest {
         this.eventSyncTask.run();
 
         // Assert
-        // Verify removeMissingEvents called with correct IDs
         final ArgumentCaptor<Set<UUID>> idsCaptor = ArgumentCaptor.forClass(Set.class);
         verify(this.eventRepository).deleteAllById(idsCaptor.capture());
         assertTrue(idsCaptor.getValue().containsAll(Arrays.asList(id1, id2)));
 
-        // Verify updateEvents called with correct entities
         final ArgumentCaptor<List<EventEntity>> entitiesCaptor = ArgumentCaptor.forClass(List.class);
         verify(this.eventRepository).saveAll(entitiesCaptor.capture());
         final List<EventEntity> savedEntities = entitiesCaptor.getValue();
