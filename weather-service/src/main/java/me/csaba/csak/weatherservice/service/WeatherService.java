@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,12 +33,12 @@ public class WeatherService {
     }
 
     @Transactional(transactionManager = "transactionManager")
-    public List<LocationProperties> getWeather(final double lon, final double lat) {
-        final Optional<LocationEntity> optLocation = this.locationRepository.findByLongitudeAndLatitude(lon, lat);
+    public List<LocationProperties> getWeather(final double lat, final double lon) {
+        final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(lon, lat);
 
         final LocationEntity locationEntity;
         if (optLocation.isEmpty()) {
-            locationEntity = this.createNewLocation(lon, lat);
+            locationEntity = this.createNewLocation(lat, lon);
             return locationEntity.getProperties();
         } else {
             locationEntity = optLocation.get();
@@ -46,11 +47,10 @@ public class WeatherService {
             }
         }
         return locationEntity.getProperties();
-
     }
 
-    private LocationEntity createNewLocation(final double lon, final double lat) {
-        final var response = this.getWeatherFor(lon, lat);
+    private LocationEntity createNewLocation(final double lat, final double lon) {
+        final var response = this.getWeatherFor(lat, lon);
         final String expires = response.getHeaders().getFirst("Expires");
         final WeatherResponse weatherResponse = new WeatherResponse(response.getBody(), expires);
 
@@ -68,7 +68,7 @@ public class WeatherService {
     }
 
     private void updateExistingLocation(final LocationEntity locationEntity) {
-        final var response = this.getWeatherFor(locationEntity.getLongitude(), locationEntity.getLatitude());
+        final var response = this.getWeatherFor(locationEntity.getLatitude(), locationEntity.getLongitude());
         final String expires = response.getHeaders().getFirst("Expires");
         final WeatherResponse weatherResponse = new WeatherResponse(response.getBody(), expires);
 
@@ -93,13 +93,14 @@ public class WeatherService {
         }
     }
 
-    private ResponseEntity<WeatherReport> getWeatherFor(final double lon, final double lat) {
+    private ResponseEntity<WeatherReport> getWeatherFor(final double lat, final double lon) {
         final var response = this.weatherClient.getWeather(lat, lon, this.userAgent);
         return response;
     }
 
     private Instant parseExpires(final String expires) {
         final ZonedDateTime zonedDateTime = ZonedDateTime.parse(expires, DateTimeFormatter.RFC_1123_DATE_TIME);
-        return zonedDateTime.toInstant();
+        final int randomMinutes = java.util.concurrent.ThreadLocalRandom.current().nextInt(1, 10); // 1 (inclusive) to 10 (exclusive)
+        return zonedDateTime.toInstant().plus(randomMinutes, ChronoUnit.MINUTES);
     }
 }

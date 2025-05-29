@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface LocationRepository extends CrudRepository<LocationEntity, UUID> {
 
-    Optional<LocationEntity> findByLongitudeAndLatitude(double longitude, double latitude);
+    Optional<LocationEntity> findByLatitudeAndLongitude (double latitude, double longitude);
 }

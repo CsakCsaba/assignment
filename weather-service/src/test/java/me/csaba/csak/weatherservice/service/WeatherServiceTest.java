@@ -57,7 +57,7 @@ class WeatherServiceTest {
                 .properties(List.of())
                 .build();
 
-        when(this.locationRepository.findByLongitudeAndLatitude(lon, lat)).thenReturn(Optional.of(entity));
+        when(this.locationRepository.findByLatitudeAndLongitude(lat, lon)).thenReturn(Optional.of(entity));
 
         // Act
         final List<LocationProperties> result = this.weatherService.getWeather(lon, lat);
@@ -73,7 +73,7 @@ class WeatherServiceTest {
         // Arrange
         final double lon = 10.0;
         final double lat = 20.0;
-        when(this.locationRepository.findByLongitudeAndLatitude(lon, lat)).thenReturn(Optional.empty());
+        when(this.locationRepository.findByLatitudeAndLongitude(lat, lon)).thenReturn(Optional.empty());
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Expires", "Wed, 21 Oct 2020 07:28:00 GMT");
@@ -88,7 +88,7 @@ class WeatherServiceTest {
         when(this.weatherClient.getWeather(lat, lon, "test-agent")).thenReturn(response);
 
         // Act
-        final List<LocationProperties> result = this.weatherService.getWeather(lon, lat);
+        final List<LocationProperties> result = this.weatherService.getWeather(lat, lon);
 
         // Assert
         verify(this.locationRepository).save(any(LocationEntity.class));
@@ -108,7 +108,7 @@ class WeatherServiceTest {
                 .properties(List.of())
                 .build();
 
-        when(this.locationRepository.findByLongitudeAndLatitude(lon, lat)).thenReturn(Optional.of(entity));
+        when(this.locationRepository.findByLatitudeAndLongitude(lat, lon)).thenReturn(Optional.of(entity));
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Expires", "Wed, 21 Oct 2020 07:28:00 GMT");
