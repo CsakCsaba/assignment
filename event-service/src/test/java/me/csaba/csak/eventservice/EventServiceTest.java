@@ -2,6 +2,8 @@ package me.csaba.csak.eventservice;
 
 import me.csaba.csak.eventservice.model.EventDTO;
 import me.csaba.csak.eventservice.model.EventEntity;
+import me.csaba.csak.eventservice.repository.EventRepository;
+import me.csaba.csak.eventservice.service.EventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

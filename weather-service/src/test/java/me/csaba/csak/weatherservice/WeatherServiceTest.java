@@ -2,8 +2,12 @@ package me.csaba.csak.weatherservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import me.csaba.csak.weatherservice.client.WeatherClient;
 import me.csaba.csak.weatherservice.model.LocationEntity;
 import me.csaba.csak.weatherservice.model.LocationProperties;
+import me.csaba.csak.weatherservice.model.WeatherReport;
+import me.csaba.csak.weatherservice.repository.LocationRepository;
+import me.csaba.csak.weatherservice.service.WeatherService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;

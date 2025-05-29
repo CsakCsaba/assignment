@@ -1,9 +1,10 @@
-package me.csaba.csak.eventservice;
+package me.csaba.csak.eventservice.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import me.csaba.csak.WeatherEvent;
+import me.csaba.csak.eventservice.repository.EventRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

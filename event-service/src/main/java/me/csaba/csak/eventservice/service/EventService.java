@@ -1,6 +1,7 @@
-package me.csaba.csak.eventservice;
+package me.csaba.csak.eventservice.service;
 
 import lombok.AllArgsConstructor;
+import me.csaba.csak.eventservice.repository.EventRepository;
 import me.csaba.csak.eventservice.model.EventDTO;
 import me.csaba.csak.eventservice.model.EventEntity;
 import org.springframework.stereotype.Service;

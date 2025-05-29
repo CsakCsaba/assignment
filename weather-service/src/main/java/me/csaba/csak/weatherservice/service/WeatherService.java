@@ -1,7 +1,11 @@
-package me.csaba.csak.weatherservice;
+package me.csaba.csak.weatherservice.service;
 
+import me.csaba.csak.weatherservice.repository.LocationRepository;
+import me.csaba.csak.weatherservice.client.WeatherClient;
+import me.csaba.csak.weatherservice.model.WeatherResponse;
 import me.csaba.csak.weatherservice.model.LocationEntity;
 import me.csaba.csak.weatherservice.model.LocationProperties;
+import me.csaba.csak.weatherservice.model.WeatherReport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

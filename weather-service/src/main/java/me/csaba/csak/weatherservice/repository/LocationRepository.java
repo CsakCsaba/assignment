@@ -1,4 +1,4 @@
-package me.csaba.csak.weatherservice;
+package me.csaba.csak.weatherservice.repository;
 
 import me.csaba.csak.weatherservice.model.LocationEntity;
 import org.springframework.data.repository.CrudRepository;

@@ -1,5 +1,6 @@
-package me.csaba.csak.weatherservice;
+package me.csaba.csak.weatherservice.client;
 
+import me.csaba.csak.weatherservice.model.WeatherReport;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

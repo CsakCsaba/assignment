@@ -3,6 +3,8 @@ package me.csaba.csak.eventservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.csaba.csak.WeatherEvent;
 import me.csaba.csak.eventservice.model.EventEntity;
+import me.csaba.csak.eventservice.repository.EventRepository;
+import me.csaba.csak.eventservice.service.WeatherEventConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
