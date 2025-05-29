@@ -47,10 +47,12 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
     networks:
       - event-network
 
-  event-services:
+  event-service:
     build: ./event-service
     container_name: event-service
     depends_on:
@@ -73,11 +75,12 @@ services:
     depends_on:
       - weather_postgres
       - kafka
+      - event-service
     environment:
       - DB_HOST=weather_postgres
       - DB_PORT=5432
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-      - EVENT_API_URL=http://event-services:8080
+      - EVENT_API_URL=http://event-service:8080
     networks:
       - event-network
     ports:
