@@ -22,7 +22,7 @@ public class WeatherKafkaEventProducer {
         this.objectMapper = objectMapper;
     }
 
-    @Transactional
+    @Transactional(transactionManager = "kafkaTransactionManager")
     public void send(final WeatherEvent event) {
         final String eventString = this.transformEvent(event);
         this.kafkaTemplate.send(this.eventTopic, eventString);

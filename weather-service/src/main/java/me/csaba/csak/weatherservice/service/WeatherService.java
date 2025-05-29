@@ -3,6 +3,7 @@ package me.csaba.csak.weatherservice.service;
 import me.csaba.csak.weatherservice.client.WeatherClient;
 import me.csaba.csak.weatherservice.model.LocationEntity;
 import me.csaba.csak.weatherservice.model.LocationProperties;
+import me.csaba.csak.weatherservice.model.PropertyDTO;
 import me.csaba.csak.weatherservice.model.WeatherReport;
 import me.csaba.csak.weatherservice.model.WeatherResponse;
 import me.csaba.csak.weatherservice.repository.LocationRepository;
@@ -19,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class WeatherService {
@@ -34,20 +36,20 @@ public class WeatherService {
     }
 
     @Transactional(transactionManager = "transactionManager")
-    public List<LocationProperties> getWeather(final double lat, final double lon) {
-        final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(lon, lat);
+    public List<PropertyDTO> getWeather(final double lat, final double lon) {
+        final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(lat, lon);
 
         final LocationEntity locationEntity;
         if (optLocation.isEmpty()) {
             locationEntity = this.createNewLocation(lat, lon);
-            return locationEntity.getProperties();
+            return locationEntity.getProperties().stream().map(PropertyDTO::new).collect(Collectors.toList());
         } else {
             locationEntity = optLocation.get();
             if (locationEntity.getExpiresAt().isBefore(Instant.now())) {
                 this.updateExistingLocation(locationEntity);
             }
         }
-        return locationEntity.getProperties();
+        return locationEntity.getProperties().stream().map(PropertyDTO::new).collect(Collectors.toList());
     }
 
     private LocationEntity createNewLocation(final double lat, final double lon) {

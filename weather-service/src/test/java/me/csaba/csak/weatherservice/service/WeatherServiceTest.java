@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import me.csaba.csak.weatherservice.client.WeatherClient;
 import me.csaba.csak.weatherservice.model.LocationEntity;
-import me.csaba.csak.weatherservice.model.LocationProperties;
+import me.csaba.csak.weatherservice.model.PropertyDTO;
 import me.csaba.csak.weatherservice.model.WeatherReport;
 import me.csaba.csak.weatherservice.repository.LocationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,10 +60,9 @@ class WeatherServiceTest {
         when(this.locationRepository.findByLatitudeAndLongitude(lat, lon)).thenReturn(Optional.of(entity));
 
         // Act
-        final List<LocationProperties> result = this.weatherService.getWeather(lon, lat);
+        final List<PropertyDTO> result = this.weatherService.getWeather(lat, lon);
 
         // Assert
-        assertSame(entity.getProperties(), result);
         verify(this.locationRepository, never()).save(any());
         verify(this.weatherClient, never()).getWeather(anyDouble(), anyDouble(), anyString());
     }
@@ -88,7 +87,7 @@ class WeatherServiceTest {
         when(this.weatherClient.getWeather(lat, lon, "test-agent")).thenReturn(response);
 
         // Act
-        final List<LocationProperties> result = this.weatherService.getWeather(lat, lon);
+        final List<PropertyDTO> result = this.weatherService.getWeather(lat, lon);
 
         // Assert
         verify(this.locationRepository).save(any(LocationEntity.class));
@@ -121,7 +120,7 @@ class WeatherServiceTest {
         when(this.weatherClient.getWeather(lat, lon, "test-agent")).thenReturn(response);
 
         // Act
-        final List<LocationProperties> result = this.weatherService.getWeather(lon, lat);
+        final List<PropertyDTO> result = this.weatherService.getWeather(lat, lon);
 
         // Assert
         verify(this.locationRepository).save(entity);

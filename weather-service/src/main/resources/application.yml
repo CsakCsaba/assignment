@@ -21,15 +21,17 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       transaction-id-prefix: tx-${spring.application.name}
-
   jpa:
     hibernate:
       ddl-auto: validate
 weather-api:
-  user-agent: ${WEATHER_API_USER_AGENT:"https://www.linkedin.com/in/csabacsak/ csabacsakcareer@gmail.com"}
+  user-agent: ${WEATHER_API_USER_AGENT:https://www.linkedin.com/in/csabacsak/ csabacsakcareer@gmail.com}
   url: "https://api.met.no"
 
 event-api:
-  url: "http://localhost:8080"
-
+  url: ${EVENT_API_URL:http://localhost:8080}
 event-topic: "weather-topic"
+
+scheduler:
+  event-cron: ${EVENT_CRON:0/30 * * * * *}
+  weather-cron: ${WEATHER_CRON:0/5 * * * * *}

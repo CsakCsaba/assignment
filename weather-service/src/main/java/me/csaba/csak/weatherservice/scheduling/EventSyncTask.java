@@ -1,6 +1,7 @@
 package me.csaba.csak.weatherservice.scheduling;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.csaba.csak.EventDTO;
 import me.csaba.csak.weatherservice.client.EventClient;
 import me.csaba.csak.weatherservice.model.EventEntity;
@@ -13,18 +14,19 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @AllArgsConstructor
-public class EventSyncTask implements ScheduleTask{
+public class EventSyncTask implements ScheduleTask {
 
     private final EventClient eventClient;
     private final EventRepository eventRepository;
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public void run() {
         final List<EventDTO> fetchedEvents = this.eventClient.getAllEvents();
-
+        log.info("Fetched {} events", fetchedEvents.size());
         this.removeMissingEvents(fetchedEvents);
 
         this.updateEvents(fetchedEvents);

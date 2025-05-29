@@ -19,14 +19,14 @@ CREATE TABLE properties
             REFERENCES location (id)
             ON DELETE CASCADE
 );
-CREATE INDEX idx_properties_location_id ON properties(location_id);
+CREATE INDEX idx_properties_location_id ON properties (location_id);
 
 CREATE TABLE event
 (
     id          UUID PRIMARY KEY,
     longitude   DOUBLE PRECISION NOT NULL,
     latitude    DOUBLE PRECISION NOT NULL,
-    temperature DOUBLE PRECISION NOT NULL,
-    wind_speed  DOUBLE PRECISION NOT NULL,
+    temperature DOUBLE PRECISION,
+    wind_speed  DOUBLE PRECISION,
     start_time  TIMESTAMP        NOT NULL
 );

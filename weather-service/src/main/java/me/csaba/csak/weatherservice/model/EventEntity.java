@@ -33,10 +33,10 @@ public class EventEntity {
     @Column(name = "start_time", nullable = false)
     private Instant startTime;
 
-    @Column(name = "temperature", nullable = false)
+    @Column(name = "temperature")
     Double temperature;
 
-    @Column(name = "wind_speed", nullable = false)
+    @Column(name = "wind_speed")
     Double windSpeed;
 
 }
