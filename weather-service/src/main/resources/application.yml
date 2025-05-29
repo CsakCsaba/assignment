@@ -1,0 +1,21 @@
+server:
+  port: ${SERVER_PORT:8090}
+
+spring:
+  application:
+    name: '@name@'
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  datasource:
+    url: jdbc:postgresql://localhost:32801/weatherdb
+    username: weatheruser
+    password: weathertpass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+weather-api:
+  user-agent: "https://www.linkedin.com/in/csabacsak/ csabacsakcareer@gmail.com"
+  url: "https://api.met.no"

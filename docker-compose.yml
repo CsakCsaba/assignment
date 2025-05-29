@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  postgres:
+  event_postgres:
     image: postgres:16.4
     container_name: event_postgres
     environment:
@@ -9,3 +9,14 @@ services:
       POSTGRES_PASSWORD: eventpass
     ports:
       - "5432:5432"
+
+
+  weather_postgres:
+    image: postgres:16.4
+    container_name: weather_postgres
+    environment:
+      POSTGRES_DB: weatherdb
+      POSTGRES_USER: weatheruser
+      POSTGRES_PASSWORD: weathertpass
+    ports:
+      - "32801:5432"

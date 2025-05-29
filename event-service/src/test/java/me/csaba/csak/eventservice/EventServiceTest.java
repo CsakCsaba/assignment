@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,8 +30,8 @@ class EventServiceTest {
                 .name("Test Event")
                 .longitude(1.0)
                 .latitude(2.0)
-                .startTime(Instant.now())
-                .endTime(Instant.now().plusSeconds(3600))
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusSeconds(3600))
                 .build();
 
         // Act
@@ -57,8 +58,8 @@ class EventServiceTest {
                 .name("Event")
                 .longitude(1.0)
                 .latitude(2.0)
-                .startTime(Instant.now())
-                .endTime(Instant.now().plusSeconds(3600))
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusSeconds(3600))
                 .build();
         when(this.eventRepository.findById(id)).thenReturn(Optional.of(entity));
 
@@ -120,15 +121,15 @@ class EventServiceTest {
                 .name("Old")
                 .longitude(1.0)
                 .latitude(2.0)
-                .startTime(Instant.now())
-                .endTime(Instant.now().plusSeconds(3600))
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusSeconds(3600))
                 .build();
         final EventDTO dto = EventDTO.builder()
                 .name("New")
                 .longitude(3.0)
                 .latitude(4.0)
-                .startTime(Instant.now())
-                .endTime(Instant.now().plusSeconds(7200))
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusSeconds(7200))
                 .build();
         when(this.eventRepository.findById(id)).thenReturn(Optional.of(entity));
 
@@ -153,8 +154,8 @@ class EventServiceTest {
                 .name("New")
                 .longitude(3.0)
                 .latitude(4.0)
-                .startTime(Instant.now())
-                .endTime(Instant.now().plusSeconds(7200))
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusSeconds(7200))
                 .build();
         when(this.eventRepository.findById(id)).thenReturn(Optional.empty());
 

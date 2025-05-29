@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,7 +21,7 @@ public class EventDTO {
     @NotNull
     private Double latitude;
     @NotNull
-    private Instant startTime;
+    private LocalDateTime startTime;
     @NotNull
-    private Instant endTime;
+    private LocalDateTime endTime;
 }

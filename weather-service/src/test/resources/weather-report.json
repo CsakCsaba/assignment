@@ -1,0 +1,28 @@
+{
+  "properties": {
+    "timeseries": [
+      {
+        "time": "2020-10-21T07:00:00",
+        "data": {
+          "instant": {
+            "details": {
+              "air_temperature": 15.5,
+              "wind_speed": 3.2
+            }
+          }
+        }
+      },
+      {
+        "time": "2020-10-21T08:00:00",
+        "data": {
+          "instant": {
+            "details": {
+              "air_temperature": 16.0,
+              "wind_speed": 2.8
+            }
+          }
+        }
+      }
+    ]
+  }
+}
