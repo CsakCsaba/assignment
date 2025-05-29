@@ -2,12 +2,16 @@ package me.csaba.csak.eventservice.service;
 
 import lombok.AllArgsConstructor;
 import me.csaba.csak.eventservice.repository.EventRepository;
-import me.csaba.csak.eventservice.model.EventDTO;
+import me.csaba.csak.EventDTO;
 import me.csaba.csak.eventservice.model.EventEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -30,13 +34,7 @@ public class EventService {
 
     public EventDTO getEventById(final UUID id) {
         final Optional<EventEntity> entityOpt = this.eventRepository.findById(id);
-        return entityOpt.map(entity -> EventDTO.builder()
-                .name(entity.getName())
-                .longitude(entity.getLongitude())
-                .latitude(entity.getLatitude())
-                .startTime(entity.getStartTime())
-                .endTime(entity.getEndTime())
-                .build()
+        return entityOpt.map(mapEvent()
         ).orElse(null);
     }
 
@@ -61,5 +59,23 @@ public class EventService {
             return true;
         }
         return false;
+    }
+
+    public List<EventDTO> getAllEvents() {
+        return StreamSupport.stream(this.eventRepository.findAll().spliterator(), false)
+                .map(mapEvent())
+                .collect(Collectors.toList());
+    }
+
+    private static Function<EventEntity, EventDTO> mapEvent() {
+        return entity -> EventDTO.builder()
+                .name(entity.getName())
+                .longitude(entity.getLongitude())
+                .latitude(entity.getLatitude())
+                .startTime(entity.getStartTime())
+                .endTime(entity.getEndTime())
+                .temperature(entity.getTemperature())
+                .windSpeed(entity.getWindSpeed())
+                .build();
     }
 }

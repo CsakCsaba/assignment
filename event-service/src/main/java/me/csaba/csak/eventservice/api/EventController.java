@@ -1,7 +1,7 @@
 package me.csaba.csak.eventservice.api;
 
 import jakarta.validation.Valid;
-import me.csaba.csak.eventservice.model.EventDTO;
+import me.csaba.csak.EventDTO;
 import me.csaba.csak.eventservice.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -45,5 +46,11 @@ public class EventController {
     public ResponseEntity<?> updateEvent(@PathVariable final UUID id, @Valid @RequestBody final EventDTO eventDTO) {
         final boolean updated = this.eventService.updateEvent(id, eventDTO);
         return updated ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EventDTO>> getAllEvents() {
+        final List<EventDTO> events = this.eventService.getAllEvents();
+        return ResponseEntity.ok(events);
     }
 }

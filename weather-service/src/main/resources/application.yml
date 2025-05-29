@@ -19,3 +19,6 @@ spring:
 weather-api:
   user-agent: "https://www.linkedin.com/in/csabacsak/ csabacsakcareer@gmail.com"
   url: "https://api.met.no"
+
+event-api:
+  url: "http://localhost:8080"

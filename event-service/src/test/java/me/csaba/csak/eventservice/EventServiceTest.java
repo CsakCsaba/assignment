@@ -1,6 +1,6 @@
 package me.csaba.csak.eventservice;
 
-import me.csaba.csak.eventservice.model.EventDTO;
+import me.csaba.csak.EventDTO;
 import me.csaba.csak.eventservice.model.EventEntity;
 import me.csaba.csak.eventservice.repository.EventRepository;
 import me.csaba.csak.eventservice.service.EventService;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -172,5 +173,40 @@ class EventServiceTest {
         // Assert
         assertThat(result).isFalse();
         verify(this.eventRepository, never()).save(any());
+    }
+
+    @Test
+    void getAllEvents_returnsMappedDTOs() {
+        // Arrange
+        final EventEntity entity1 = EventEntity.builder()
+                .name("Event 1")
+                .longitude(10.0)
+                .latitude(20.0)
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusHours(1))
+                .temperature(25.0)
+                .windSpeed(5.0)
+                .build();
+        final EventEntity entity2 = EventEntity.builder()
+                .name("Event 2")
+                .longitude(30.0)
+                .latitude(40.0)
+                .startTime(LocalDateTime.now())
+                .endTime(LocalDateTime.now().plusHours(2))
+                .temperature(22.0)
+                .windSpeed(3.0)
+                .build();
+        final Iterable<EventEntity> entities = List.of(entity1, entity2);
+        when(this.eventRepository.findAll()).thenReturn(entities);
+
+        // Act
+        final List<EventDTO> result = this.eventService.getAllEvents();
+
+        // Assert
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getName()).isEqualTo("Event 1");
+        assertThat(result.get(1).getName()).isEqualTo("Event 2");
+        assertThat(result.get(0).getTemperature()).isEqualTo(25.0);
+        assertThat(result.get(1).getWindSpeed()).isEqualTo(3.0);
     }
 }

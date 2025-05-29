@@ -1,4 +1,4 @@
-package me.csaba.csak.eventservice.model;
+package me.csaba.csak;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,4 +24,6 @@ public class EventDTO {
     private LocalDateTime startTime;
     @NotNull
     private LocalDateTime endTime;
+    private Double temperature;
+    private Double windSpeed;
 }
