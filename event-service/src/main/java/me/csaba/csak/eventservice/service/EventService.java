@@ -69,6 +69,7 @@ public class EventService {
 
     private static Function<EventEntity, EventDTO> mapEvent() {
         return entity -> EventDTO.builder()
+                .id(entity.getId())
                 .name(entity.getName())
                 .longitude(entity.getLongitude())
                 .latitude(entity.getLatitude())

@@ -1,4 +1,4 @@
-package me.csaba.csak.weatherservice;
+package me.csaba.csak.weatherservice.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -7,14 +7,13 @@ import me.csaba.csak.weatherservice.model.LocationEntity;
 import me.csaba.csak.weatherservice.model.LocationProperties;
 import me.csaba.csak.weatherservice.model.WeatherReport;
 import me.csaba.csak.weatherservice.repository.LocationRepository;
-import me.csaba.csak.weatherservice.service.WeatherService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,7 +53,7 @@ class WeatherServiceTest {
                 .id(UUID.randomUUID())
                 .longitude(lon)
                 .latitude(lat)
-                .expiresAt(LocalDateTime.now(ZoneOffset.UTC).plusHours(1))
+                .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
                 .properties(List.of())
                 .build();
 
@@ -105,7 +104,7 @@ class WeatherServiceTest {
                 .id(UUID.randomUUID())
                 .longitude(lon)
                 .latitude(lat)
-                .expiresAt(LocalDateTime.now(ZoneOffset.UTC).minusHours(1))
+                .expiresAt(Instant.now().minus(1, ChronoUnit.HOURS))
                 .properties(List.of())
                 .build();
 

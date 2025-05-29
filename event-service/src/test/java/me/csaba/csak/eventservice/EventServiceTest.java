@@ -8,7 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,8 +39,8 @@ class EventServiceTest {
                 .name("Test Event")
                 .longitude(1.0)
                 .latitude(2.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusSeconds(3600))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plusSeconds(3600))
                 .build();
 
         // Act
@@ -66,8 +67,8 @@ class EventServiceTest {
                 .name("Event")
                 .longitude(1.0)
                 .latitude(2.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusSeconds(3600))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plusSeconds(3600))
                 .build();
         when(this.eventRepository.findById(id)).thenReturn(Optional.of(entity));
 
@@ -129,15 +130,15 @@ class EventServiceTest {
                 .name("Old")
                 .longitude(1.0)
                 .latitude(2.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusSeconds(3600))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plusSeconds(3600))
                 .build();
         final EventDTO dto = EventDTO.builder()
                 .name("New")
                 .longitude(3.0)
                 .latitude(4.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusSeconds(7200))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plusSeconds(7200))
                 .build();
         when(this.eventRepository.findById(id)).thenReturn(Optional.of(entity));
 
@@ -162,8 +163,8 @@ class EventServiceTest {
                 .name("New")
                 .longitude(3.0)
                 .latitude(4.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusSeconds(7200))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plusSeconds(7200))
                 .build();
         when(this.eventRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -182,8 +183,8 @@ class EventServiceTest {
                 .name("Event 1")
                 .longitude(10.0)
                 .latitude(20.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusHours(1))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plus(1, ChronoUnit.HOURS))
                 .temperature(25.0)
                 .windSpeed(5.0)
                 .build();
@@ -191,8 +192,8 @@ class EventServiceTest {
                 .name("Event 2")
                 .longitude(30.0)
                 .latitude(40.0)
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now().plusHours(2))
+                .startTime(Instant.now())
+                .endTime(Instant.now().plus(2, ChronoUnit.HOURS))
                 .temperature(22.0)
                 .windSpeed(3.0)
                 .build();

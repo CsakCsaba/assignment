@@ -12,7 +12,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,5 +38,5 @@ public class LocationEntity {
     private List<LocationProperties> properties;
 
     @Column(name = "expires_at", nullable = false)
-    LocalDateTime expiresAt;
+    private Instant expiresAt;
 }

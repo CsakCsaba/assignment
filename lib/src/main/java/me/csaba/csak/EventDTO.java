@@ -7,13 +7,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
 public class EventDTO {
+    private UUID id;
     @NotBlank
     private String name;
     @NotNull
@@ -21,9 +23,9 @@ public class EventDTO {
     @NotNull
     private Double latitude;
     @NotNull
-    private LocalDateTime startTime;
+    private Instant startTime;
     @NotNull
-    private LocalDateTime endTime;
+    private Instant endTime;
     private Double temperature;
     private Double windSpeed;
 }

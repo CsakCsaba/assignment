@@ -1,18 +1,17 @@
 package me.csaba.csak.weatherservice.service;
 
-import me.csaba.csak.weatherservice.repository.LocationRepository;
 import me.csaba.csak.weatherservice.client.WeatherClient;
-import me.csaba.csak.weatherservice.model.WeatherResponse;
 import me.csaba.csak.weatherservice.model.LocationEntity;
 import me.csaba.csak.weatherservice.model.LocationProperties;
 import me.csaba.csak.weatherservice.model.WeatherReport;
+import me.csaba.csak.weatherservice.model.WeatherResponse;
+import me.csaba.csak.weatherservice.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -42,7 +41,7 @@ public class WeatherService {
             return locationEntity.getProperties();
         } else {
             locationEntity = optLocation.get();
-            if (locationEntity.getExpiresAt().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+            if (locationEntity.getExpiresAt().isBefore(Instant.now())) {
                 this.updateExistingLocation(locationEntity);
             }
         }
@@ -99,8 +98,8 @@ public class WeatherService {
         return response;
     }
 
-    private LocalDateTime parseExpires(final String expires) {
+    private Instant parseExpires(final String expires) {
         final ZonedDateTime zonedDateTime = ZonedDateTime.parse(expires, DateTimeFormatter.RFC_1123_DATE_TIME);
-        return zonedDateTime.toLocalDateTime();
+        return zonedDateTime.toInstant();
     }
 }
