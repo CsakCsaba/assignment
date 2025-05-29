@@ -1,6 +1,7 @@
 package me.csaba.csak.eventservice;
 
 
+import me.csaba.csak.eventservice.model.EventEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

@@ -1,6 +1,7 @@
 package me.csaba.csak.eventservice;
 
 import jakarta.validation.Valid;
+import me.csaba.csak.eventservice.model.EventDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

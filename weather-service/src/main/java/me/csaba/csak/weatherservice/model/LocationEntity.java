@@ -1,4 +1,4 @@
-package me.csaba.csak.weatherservice;
+package me.csaba.csak.weatherservice.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package me.csaba.csak.eventservice;
+package me.csaba.csak.eventservice.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,5 +38,11 @@ public class EventEntity {
 
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
+
+    @Column(name = "temperature")
+    private Double temperature;
+
+    @Column(name = "wind_speed")
+    private Double windSpeed;
 
 }

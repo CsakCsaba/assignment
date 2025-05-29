@@ -1,5 +1,7 @@
 package me.csaba.csak.weatherservice;
 
+import me.csaba.csak.weatherservice.model.LocationEntity;
+import me.csaba.csak.weatherservice.model.LocationProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,7 @@ public class WeatherService {
             return locationEntity.getProperties();
         } else {
             locationEntity = optLocation.get();
-            if (locationEntity.expiresAt.isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+            if (locationEntity.getExpiresAt().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
                 this.updateExistingLocation(locationEntity);
             }
         }
