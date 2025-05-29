@@ -12,6 +12,15 @@ spring:
     username: weatheruser
     password: weathertpass
     driver-class-name: org.postgresql.Driver
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    admin:
+      properties:
+        bootstrap.servers: ${spring.kafka.bootstrap-servers}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      transaction-id-prefix: tx-${spring.application.name}
 
   jpa:
     hibernate:

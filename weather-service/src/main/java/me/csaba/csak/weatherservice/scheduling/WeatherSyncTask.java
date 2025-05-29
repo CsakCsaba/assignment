@@ -5,6 +5,7 @@ import me.csaba.csak.weatherservice.model.EventEntity;
 import me.csaba.csak.weatherservice.model.LocationProperties;
 import me.csaba.csak.weatherservice.repository.EventRepository;
 import me.csaba.csak.weatherservice.service.WeatherService;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class WeatherSyncTask implements ScheduleTask {
 
     private final WeatherService weatherService;
     private final EventRepository eventRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     @Transactional
@@ -32,9 +34,11 @@ public class WeatherSyncTask implements ScheduleTask {
                     .orElse(null);
             if (closest != null &&
                     (!closest.getTemperature().equals(eventEntity.getTemperature())
-                            || !closest.getTemperature().equals(eventEntity.getWindSpeed()))) {
+                            || !closest.getWindSpeed().equals(eventEntity.getWindSpeed()))) {
                 eventEntity.setTemperature(closest.getTemperature());
                 eventEntity.setWindSpeed(closest.getWindSpeed());
+
+                this.eventRepository.save(eventEntity);
             }
         });
     }
