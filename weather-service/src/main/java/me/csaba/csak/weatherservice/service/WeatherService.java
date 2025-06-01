@@ -36,22 +36,26 @@ public class WeatherService {
     }
 
     @Transactional(transactionManager = "transactionManager")
-   public List<PropertyDTO> getWeather(final double lat, final double lon) {
+    public List<PropertyDTO> getWeather(final double lat, final double lon) {
         //Rounding to 3 digits
-       final double roundedLat = Math.round(lat * 1000.0) / 1000.0;
-       final double roundedLon = Math.round(lon * 1000.0) / 1000.0;
+        final double roundedLat = Math.round(lat * 1000.0) / 1000.0;
+        final double roundedLon = Math.round(lon * 1000.0) / 1000.0;
 
-       final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(roundedLat, roundedLon);
+        final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(roundedLat, roundedLon);
         final LocationEntity locationEntity;
         if (optLocation.isEmpty()) {
             locationEntity = this.createNewLocation(lat, lon);
-            return locationEntity.getProperties().stream().map(PropertyDTO::new).collect(Collectors.toList());
+            return mapProperties(locationEntity);
         } else {
             locationEntity = optLocation.get();
             if (locationEntity.getExpiresAt().isBefore(Instant.now())) {
                 this.updateExistingLocation(locationEntity);
             }
         }
+        return mapProperties(locationEntity);
+    }
+
+    private static List<PropertyDTO> mapProperties(final LocationEntity locationEntity) {
         return locationEntity.getProperties().stream().map(PropertyDTO::new).collect(Collectors.toList());
     }
 
