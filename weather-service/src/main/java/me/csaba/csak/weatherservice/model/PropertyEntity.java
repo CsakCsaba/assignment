@@ -19,7 +19,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationProperties {
+public class PropertyEntity {
     @Id
     private UUID id;
 

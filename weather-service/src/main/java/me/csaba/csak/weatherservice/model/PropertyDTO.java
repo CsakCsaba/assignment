@@ -10,7 +10,7 @@ public class PropertyDTO {
     private final Double windSpeed;
     private final Instant timestamp;
 
-    public PropertyDTO(final LocationProperties properties) {
+    public PropertyDTO(final PropertyEntity properties) {
         this.temperature = properties.getTemperature();
         this.windSpeed = properties.getWindSpeed();
         this.timestamp = properties.getTimestamp();

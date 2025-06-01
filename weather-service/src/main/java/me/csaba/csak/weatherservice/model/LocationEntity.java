@@ -34,8 +34,8 @@ public class LocationEntity {
     @Column(name = "longitude", updatable = false, nullable = false)
     private Double longitude;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "location", cascade = CascadeType.ALL, targetEntity = LocationProperties.class)
-    private List<LocationProperties> properties;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "location", cascade = CascadeType.ALL, targetEntity = PropertyEntity.class)
+    private List<PropertyEntity> properties;
 
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;

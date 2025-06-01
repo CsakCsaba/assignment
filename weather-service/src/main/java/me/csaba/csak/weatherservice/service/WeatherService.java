@@ -2,7 +2,7 @@ package me.csaba.csak.weatherservice.service;
 
 import me.csaba.csak.weatherservice.client.WeatherClient;
 import me.csaba.csak.weatherservice.model.LocationEntity;
-import me.csaba.csak.weatherservice.model.LocationProperties;
+import me.csaba.csak.weatherservice.model.PropertyEntity;
 import me.csaba.csak.weatherservice.model.PropertyDTO;
 import me.csaba.csak.weatherservice.model.WeatherReport;
 import me.csaba.csak.weatherservice.model.WeatherResponse;
@@ -90,8 +90,8 @@ public class WeatherService {
     private static void enrichLocationWithWeatherInfo(final WeatherResponse weatherResponse, final LocationEntity locationEntity) {
         final WeatherReport report = weatherResponse.weatherReport();
         if (report != null && report.properties() != null && report.properties().timeseries() != null) {
-            final List<LocationProperties> propertiesList = report.properties().timeseries().stream()
-                    .map(ts -> LocationProperties.builder()
+            final List<PropertyEntity> propertiesList = report.properties().timeseries().stream()
+                    .map(ts -> PropertyEntity.builder()
                             .id(UUID.randomUUID())
                             .location(locationEntity)
                             .temperature(ts.data().instant().details().airTemperature())

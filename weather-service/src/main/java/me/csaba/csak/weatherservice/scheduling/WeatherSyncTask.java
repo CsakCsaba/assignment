@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.csaba.csak.WeatherEvent;
 import me.csaba.csak.weatherservice.model.EventEntity;
-import me.csaba.csak.weatherservice.model.LocationProperties;
 import me.csaba.csak.weatherservice.model.PropertyDTO;
 import me.csaba.csak.weatherservice.repository.EventRepository;
 import me.csaba.csak.weatherservice.service.WeatherKafkaEventProducer;
@@ -43,15 +42,19 @@ public class WeatherSyncTask implements ScheduleTask {
                         eventEntity.setWindSpeed(closest.getWindSpeed());
                         this.eventRepository.save(eventEntity);
 
-                        final WeatherEvent weatherEvent = WeatherEvent.builder()
-                                .eventId(eventEntity.getId())
-                                .windSpeed(eventEntity.getWindSpeed())
-                                .temperature(eventEntity.getTemperature())
-                                .build();
-
-                        this.weatherKafkaEventProducer.send(weatherEvent);
-                        log.info("Updated weather event: {}", weatherEvent.toString());
+                        this.sendUpdatedEvent(eventEntity);
                     }
                 });
+    }
+
+    private void sendUpdatedEvent(final EventEntity eventEntity) {
+        final WeatherEvent weatherEvent = WeatherEvent.builder()
+                .eventId(eventEntity.getId())
+                .windSpeed(eventEntity.getWindSpeed())
+                .temperature(eventEntity.getTemperature())
+                .build();
+
+        this.weatherKafkaEventProducer.send(weatherEvent);
+        log.info("Updated weather event: {}", weatherEvent.toString());
     }
 }

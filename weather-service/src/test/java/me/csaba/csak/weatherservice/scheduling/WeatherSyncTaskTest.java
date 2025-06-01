@@ -3,7 +3,7 @@ package me.csaba.csak.weatherservice.scheduling;
 
 import me.csaba.csak.WeatherEvent;
 import me.csaba.csak.weatherservice.model.EventEntity;
-import me.csaba.csak.weatherservice.model.LocationProperties;
+import me.csaba.csak.weatherservice.model.PropertyEntity;
 import me.csaba.csak.weatherservice.model.PropertyDTO;
 import me.csaba.csak.weatherservice.repository.EventRepository;
 import me.csaba.csak.weatherservice.service.WeatherKafkaEventProducer;
@@ -54,13 +54,13 @@ class WeatherSyncTaskTest {
 
         when(this.eventRepository.findAllByStartTimeBefore(any())).thenReturn(Stream.of(event));
 
-        final LocationProperties prop1 = new LocationProperties();
+        final PropertyEntity prop1 = new PropertyEntity();
         prop1.setTimestamp(event.getStartTime().minusSeconds(600));
         prop1.setTemperature(25.0);
         prop1.setWindSpeed(5.0);
         final PropertyDTO dto1 = new PropertyDTO(prop1);
 
-        final LocationProperties prop2 = new LocationProperties();
+        final PropertyEntity prop2 = new PropertyEntity();
         prop2.setTimestamp(event.getStartTime().minusSeconds(200));
         prop2.setTemperature(26.0);
         prop2.setWindSpeed(8.0);
@@ -97,13 +97,13 @@ class WeatherSyncTaskTest {
 
         when(this.eventRepository.findAllByStartTimeBefore(any())).thenReturn(Stream.of(event));
 
-        final LocationProperties prop1 = new LocationProperties();
+        final PropertyEntity prop1 = new PropertyEntity();
         prop1.setTimestamp(event.getStartTime().minusSeconds(600));
         prop1.setTemperature(25.0);
         prop1.setWindSpeed(5.0);
         final PropertyDTO dto1 = new PropertyDTO(prop1);
 
-        final LocationProperties prop2 = new LocationProperties();
+        final PropertyEntity prop2 = new PropertyEntity();
         prop2.setTimestamp(event.getStartTime().minusSeconds(200));
         prop2.setTemperature(26.0);
         prop2.setWindSpeed(8.0);
