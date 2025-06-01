@@ -27,7 +27,7 @@ The services use a postgresql databases, kafka and is containerized using Docker
 ```
 curl -L -X GET 'http://localhost:8080/events'
 ```
-4. Some events should now have been updated with weather data.
+4. Some events should now have been updated with weather data based on the start date of the event (Only events with start date within 7 days will get updated).
 5. You can now turn off the services:
 ```
 docker compose -f docker-compose.yml down
@@ -36,15 +36,19 @@ docker compose -f docker-compose.yml down
 ## Requirements
 
 - Maven
-- Docker desktop
+- Docker
 - curl
 
 
 ## TODOs:
 
+- Documentation for the APIs (e.g.: Swagger) for the endpoints 
 - Proper security for all the endpoints
 - CI/CD pipeline
 - Distributed scheduling: currently you can start multiple instance of the event-service to handle bigger loads, but the
 weather-service needs some way to handle more thousands of updates parallely
 - On event creation and modification the event-serivce should also send events via kafka, which the weather-service could consume
 to have better updates about the events
+- Codestyle plugin e.g.: maven-spotless
+- Health endpoints for k8s
+- (Mutation test plugin for better tests)
