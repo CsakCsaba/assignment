@@ -36,9 +36,12 @@ public class WeatherService {
     }
 
     @Transactional(transactionManager = "transactionManager")
-    public List<PropertyDTO> getWeather(final double lat, final double lon) {
-        final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(lat, lon);
+   public List<PropertyDTO> getWeather(final double lat, final double lon) {
+        //Rounding to 3 digits
+       final double roundedLat = Math.round(lat * 1000.0) / 1000.0;
+       final double roundedLon = Math.round(lon * 1000.0) / 1000.0;
 
+       final Optional<LocationEntity> optLocation = this.locationRepository.findByLatitudeAndLongitude(roundedLat, roundedLon);
         final LocationEntity locationEntity;
         if (optLocation.isEmpty()) {
             locationEntity = this.createNewLocation(lat, lon);
