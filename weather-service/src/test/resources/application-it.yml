@@ -3,3 +3,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/weatherdb
     username: testuser
     password: testpass
+
+event-api:
+  url: http://localhost:4545
