@@ -25,11 +25,25 @@ public class EventSyncTask implements ScheduleTask {
     @Override
     @Transactional(transactionManager = "transactionManager")
     public void run() {
-        final List<EventDTO> fetchedEvents = this.eventClient.getAllEvents();
+        final List<EventDTO> fetchedEvents = this.getAllEvents();
         log.info("Fetched {} events", fetchedEvents.size());
         this.removeMissingEvents(fetchedEvents);
 
         this.updateEvents(fetchedEvents);
+    }
+
+    private List<EventDTO> getAllEvents() {
+        //Simple retry logic to handle startup error
+        try {
+            return this.eventClient.getAllEvents();
+        } catch (final Exception e) {
+            try {
+                Thread.sleep(3000);
+                return this.eventClient.getAllEvents();
+            } catch (final Exception ex) {
+                throw new RuntimeException("Failed to fetch events after retry", e);
+            }
+        }
     }
 
     private void updateEvents(final List<EventDTO> fetchedEvents) {
